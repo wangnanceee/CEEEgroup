@@ -1049,14 +1049,14 @@ note: Bartlett's test performed on cells with positive variance:
 	global y1 std_noncog_score_2013_2014_1 std_noncog_score_2013_2014_2 std_responsibility_2013_2014 std_open_mind_2013_2014 std_nervousness_2013_2014 std_extroversion_2013_2014 std_friend_2013_2014        
 	eststo clear
     set matsize 600
-    xtset ids survey_year
-	xtdes 
+    xtset ids 
+	*xtdes 
 	*xtline tea_stu_pro_2013_2014
     xtile tea_stu_pro_2013_2014_3=tea_stu_pro_2013_2014, nq(3)
 	
 	eststo:xtreg std_cog_score_2013_2014 tea_stu_pro_2013_2014,fe  
 	eststo:xtreg std_cog_score_2013_2014 tea_stu_pro_2013_2014 stu_num_class_2013_2014,fe 
-	*eststo:xtreg std_cog_score_2013_2014 tea_stu_pro_2013_2014 sch_type_2013_2014,fe
+	eststo:xtreg std_cog_score_2013_2014 tea_stu_pro_2013_2014 stu_male_2013_2014 stu_residence_2013_2014 stu_quality_2013_2014 stu_rank_2013_2014 sch_type_2013_2014,fe
 	
 	//xtreg std_cog_score_2013_2014 tea_stu_pro_2013_2014 i.year,fe i(ids) r  
 	//r 表示聚类稳健标准误
@@ -1082,7 +1082,7 @@ note: Bartlett's test performed on cells with positive variance:
 	foreach var of varlist $y1 {
 	eststo:xtreg `var' tea_stu_pro_2013_2014,fe 
 	eststo:xtreg `var' tea_stu_pro_2013_2014 stu_num_class_2013_2014,fe 
-	*eststo:xtreg `var' tea_stu_pro_2013_2014 sch_type_2013_2014,fe  
+	eststo:xtreg `var' tea_stu_pro_2013_2014 sch_type_2013_2014,fe  
 	
     esttab using "${resultsdir}/method2-nocog.csv",nolabel b(2) se(2) r2 star(* 0.10 ** 0.05 *** 0.01) obslast replace
     }
